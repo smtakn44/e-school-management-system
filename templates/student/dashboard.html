@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - E-School{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2><i class="fas fa-tachometer-alt"></i> Student Dashboard</h2>
+        <p class="text-muted">Welcome back, {{ user.username }}!</p>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ lectures|length }}</h4>
+                        <p>Total Lectures</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-book fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ student_info.dept_name or 'N/A' }}</h4>
+                        <p>Department</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-building fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>
+                            {% set total_grades = lectures|selectattr('pass_grade', 'defined')|list %}
+                            {% if total_grades %}
+                            {{ "%.1f"|format((total_grades|sum(attribute='pass_grade')) / total_grades|length) }}
+                            {% else %}
+                            N/A
+                            {% endif %}
+                        </h4>
+                        <p>Average Grade</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-book"></i> My Lectures</h5>
+            </div>
+            <div class="card-body">
+                {% if lectures %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Lecture Name</th>
+                                <th>Department</th>
+                                <th>Teacher</th>
+                                <th>Grade</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lecture in lectures %}
+                            <tr>
+                                <td>{{ lecture.lecture_name }}</td>
+                                <td>{{ lecture.dept_name }}</td>
+                                <td>{{ lecture.teacher_name or 'Not Assigned' }}</td>
+                                <td>
+                                    {% if lecture.pass_grade %}
+                                    <span class="badge bg-primary">{{ lecture.pass_grade }}</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">Not Graded</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if lecture.pass_grade %}
+                                    {% if lecture.pass_grade >= 60 %}
+                                    <span class="badge bg-success">Pass</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Fail</span>
+                                    {% endif %}
+                                    {% else %}
+                                    <span class="badge bg-warning">Pending</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-book fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">No lectures enrolled yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-user"></i> Profile Information</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>Student ID:</strong> {{ student_info.student_id }}</p>
+                <p><strong>Username:</strong> {{ student_info.username }}</p>
+                <p><strong>Department:</strong> {{ student_info.dept_name or 'Not Assigned' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h6><i class="fas fa-chart-pie"></i> Grade Distribution</h6>
+            </div>
+            <div class="card-body">
+                {% set graded_lectures = lectures|selectattr('pass_grade', 'defined')|list %}
+                {% if graded_lectures %}
+                {% set a_grades = graded_lectures|selectattr('pass_grade', '>=', 90)|list|length %}
+                {% set b_grades = graded_lectures|select('pass_grade')|select('>=', 80)|select('<', 90)|list|length %}
+                    {% set c_grades=graded_lectures|select('pass_grade')|select('>=', 70)|select('<', 80)|list|length %}
+                        {% set d_grades=graded_lectures|select('pass_grade')|select('>=', 60)|select('<',
+                            70)|list|length %} {% set f_grades=graded_lectures|select('pass_grade')|select('<',
+                            60)|list|length %} <p>A grades: <span class="badge bg-success">{{ a_grades }}</span></p>
+                            <p>B grades: <span class="badge bg-info">{{ b_grades }}</span></p>
+                            <p>C grades: <span class="badge bg-warning">{{ c_grades }}</span></p>
+                            <p>D grades: <span class="badge bg-secondary">{{ d_grades }}</span></p>
+                            <p>F grades: <span class="badge bg-danger">{{ f_grades }}</span></p>
+                            {% else %}
+                            <p class="text-muted">No grades available yet.</p>
+                            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

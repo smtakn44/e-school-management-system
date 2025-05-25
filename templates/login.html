@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Login - E-School Management System{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <i class="fas fa-sign-in-alt fa-2x text-primary mb-2"></i>
+                <h4>Login</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/auth/login">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="user_type" class="form-label">Login as</label>
+                        <select class="form-select" id="user_type" name="user_type" required>
+                            <option value="">Select user type</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h6 class="card-title">Test Credentials:</h6>
+                <small class="text-muted">
+                    Student: student1/student123<br>
+                    Teacher: teacher1/teacher123<br>
+                    Admin: admin/admin123
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

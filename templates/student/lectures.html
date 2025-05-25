@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}My Lectures - E-School{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2><i class="fas fa-book"></i> My Lectures</h2>
+        <p class="text-muted">View all your enrolled lectures and grades</p>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {% if lectures %}
+        <div class="row">
+            {% for lecture in lectures %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h6 class="mb-0">{{ lecture.lecture_name }}</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Department:</strong> {{ lecture.dept_name }}<br>
+                            <strong>Teacher:</strong> {{ lecture.teacher_name or 'Not Assigned' }}
+                        </p>
+
+                        <div class="mt-3">
+                            {% if lecture.pass_grade %}
+                            <div class="text-center">
+                                <h4 class="
+                                            {% if lecture.pass_grade >= 90 %}text-success
+                                            {% elif lecture.pass_grade >= 80 %}text-info
+                                            {% elif lecture.pass_grade >= 70 %}text-warning
+                                            {% elif lecture.pass_grade >= 60 %}text-secondary
+                                            {% else %}text-danger
+                                            {% endif %}
+                                        ">
+                                    {{ lecture.pass_grade }}
+                                </h4>
+                                <p class="mb-0">
+                                    {% if lecture.pass_grade >= 90 %}
+                                    <span class="badge bg-success">A - Excellent</span>
+                                    {% elif lecture.pass_grade >= 80 %}
+                                    <span class="badge bg-info">B - Good</span>
+                                    {% elif lecture.pass_grade >= 70 %}
+                                    <span class="badge bg-warning">C - Average</span>
+                                    {% elif lecture.pass_grade >= 60 %}
+                                    <span class="badge bg-secondary">D - Below Average</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">F - Fail</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            {% else %}
+                            <div class="text-center">
+                                <i class="fas fa-clock fa-2x text-muted mb-2"></i>
+                                <p class="text-muted mb-0">Grade Not Available</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">
+                            Status:
+                            {% if lecture.pass_grade %}
+                            {% if lecture.pass_grade >= 60 %}
+                            <span class="badge bg-success">Passed</span>
+                            {% else %}
+                            <span class="badge bg-danger">Failed</span>
+                            {% endif %}
+                            {% else %}
+                            <span class="badge bg-warning">In Progress</span>
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-book fa-5x text-muted mb-4"></i>
+            <h4 class="text-muted">No Lectures Enrolled</h4>
+            <p class="text-muted">You are not currently enrolled in any lectures.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if lectures %}
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-bar"></i> Grade Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <h4 class="text-primary">{{ lectures|length }}</h4>
+                        <p class="text-muted">Total Lectures</p>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        {% set graded = lectures|selectattr('pass_grade', 'defined')|list %}
+                        <h4 class="text-info">{{ graded|length }}</h4>
+                        <p class="text-muted">Graded</p>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        {% set passed = lectures|selectattr('pass_grade', '>=', 60)|list %}
+                        <h4 class="text-success">{{ passed|length }}</h4>
+                        <p class="text-muted">Passed</p>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        {% set failed = lectures|selectattr('pass_grade', '<', 60)|list %}
+                        <h4 class="text-danger">{{ failed|length }}</h4>
+                        <p class="text-muted">Failed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
