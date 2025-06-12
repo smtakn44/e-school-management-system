@@ -6,7 +6,7 @@ A simple school management system built with FastAPI, MySQL, and Bootstrap for m
 
 - **Student Portal**: View lectures, check grades, track academic progress
 - **Teacher Portal**: Manage lectures, grade students, view class performance
-- **Admin Portal**: Manage students, teachers, departments, and system operations
+- **administrator Portal**: Manage students, teachers, departments, and system operations
 - **Responsive Design**: Bootstrap-based responsive interface
 - **Session Management**: Simple session-based authentication
 
@@ -71,7 +71,7 @@ A simple school management system built with FastAPI, MySQL, and Bootstrap for m
 - Password: `teacher123`
 
 ### Administrator
-- Username: `admin`
+- Username: `administrator`
 - Password: `admin123`
 
 ## Database Configuration
@@ -102,7 +102,7 @@ E-School/
 │   │   ├── auth.py          # Authentication routes
 │   │   ├── student.py       # Student routes
 │   │   ├── teacher.py       # Teacher routes
-│   │   ├── admin.py         # Admin routes
+│   │   ├── administrator.py         # administrator routes
 │   │   └── general.py       # General routes
 │   └── utils/
 │       └── helpers.py       # Helper functions
@@ -117,7 +117,7 @@ E-School/
 │   ├── login.html          # Login page
 │   ├── student/            # Student templates
 │   ├── teacher/            # Teacher templates
-│   └── admin/              # Admin templates
+│   └── administrator/              # administrator templates
 ├── requirements.txt        # Python dependencies
 ├── database_setup.sql      # Database setup script
 └── README.md              # This file
@@ -129,7 +129,7 @@ E-School/
 - **Department**: Academic departments
 - **Student**: Student accounts and information
 - **Teacher**: Teacher accounts and information
-- **Administrator**: Admin accounts
+- **Administrator**: administrator accounts
 - **Lecture**: Course/lecture information
 - **Warning**: System warnings
 - **Schedule**: System schedules
@@ -153,14 +153,14 @@ E-School/
 - `GET /teacher/lecture/{id}/students` - View students in lecture
 - `POST /teacher/update_grade` - Update student grade
 
-### Admin Routes
-- `GET /admin/dashboard` - Admin dashboard
-- `GET /admin/students` - Manage students
-- `GET /admin/teachers` - Manage teachers
-- `GET /admin/departments` - Manage departments
-- `POST /admin/students/add` - Add new student
-- `POST /admin/teachers/add` - Add new teacher
-- `POST /admin/departments/add` - Add new department
+### administrator Routes
+- `GET /administrator/dashboard` - administrator dashboard
+- `GET /administrator/students` - Manage students
+- `GET /administrator/teachers` - Manage teachers
+- `GET /administrator/departments` - Manage departments
+- `POST /administrator/students/add` - Add new student
+- `POST /administrator/teachers/add` - Add new teacher
+- `POST /administrator/departments/add` - Add new department
 
 ## Development Notes
 
@@ -181,7 +181,7 @@ View enrolled lectures, grades, and academic progress.
 ### Teacher Dashboard
 Manage assigned lectures and grade students.
 
-### Admin Dashboard
+### administrator Dashboard
 System overview with management options for students, teachers, and departments.
 
 ## Contributing

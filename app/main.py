@@ -5,9 +5,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 import os
 from typing import Optional
-
-from .database import db
-from .routes import auth, student, teacher, admin, general
+from .routes import auth, student, teacher, administrator, general
 
 app = FastAPI(title="E-School Management System")
 
@@ -24,18 +22,9 @@ templates = Jinja2Templates(directory="templates")
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(student.router, prefix="/student", tags=["student"])
 app.include_router(teacher.router, prefix="/teacher", tags=["teacher"])
-app.include_router(admin.router, prefix="/admin", tags=["admin"])
+app.include_router(administrator.router, prefix="/administrator", tags=["administrator"])
 app.include_router(general.router, tags=["general"])
 
-@app.on_event("startup")
-async def startup_event():
-    """Initialize database connection on startup"""
-    db.connect()
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Close database connection on shutdown"""
-    db.disconnect()
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
@@ -47,14 +36,13 @@ async def home(request: Request):
             return RedirectResponse("/student/dashboard")
         elif user_type == 'teacher':
             return RedirectResponse("/teacher/dashboard")
-        elif user_type == 'admin':
-            return RedirectResponse("/admin/dashboard")
+        elif user_type == 'administrator':
+            return RedirectResponse("/administrator/dashboard")
     
     return templates.TemplateResponse("index.html", {"request": request})
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-    
-    
-    
+    uvicorn.run(app, host="0.0.0.0", port=8001)
+
+

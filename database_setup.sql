@@ -87,7 +87,7 @@ INSERT INTO Department (dept_name) VALUES
 ('Chemistry');
 
 INSERT INTO Administrator (username, password) VALUES 
-('admin', 'admin123');
+('administrator', 'admin123');
 
 INSERT INTO Teacher (username, password, office_hour, office_no) VALUES 
 ('teacher1', 'teacher123', 'Mon-Wed 10:00-12:00', 'A101'),

@@ -149,19 +149,19 @@
             <div class="card-body">
                 {% set graded_lectures = lectures|selectattr('pass_grade', 'defined')|list %}
                 {% if graded_lectures %}
-                {% set a_grades = graded_lectures|selectattr('pass_grade', '>=', 90)|list|length %}
-                {% set b_grades = graded_lectures|select('pass_grade')|select('>=', 80)|select('<', 90)|list|length %}
-                    {% set c_grades=graded_lectures|select('pass_grade')|select('>=', 70)|select('<', 80)|list|length %}
-                        {% set d_grades=graded_lectures|select('pass_grade')|select('>=', 60)|select('<',
-                            70)|list|length %} {% set f_grades=graded_lectures|select('pass_grade')|select('<',
-                            60)|list|length %} <p>A grades: <span class="badge bg-success">{{ a_grades }}</span></p>
-                            <p>B grades: <span class="badge bg-info">{{ b_grades }}</span></p>
-                            <p>C grades: <span class="badge bg-warning">{{ c_grades }}</span></p>
-                            <p>D grades: <span class="badge bg-secondary">{{ d_grades }}</span></p>
-                            <p>F grades: <span class="badge bg-danger">{{ f_grades }}</span></p>
-                            {% else %}
-                            <p class="text-muted">No grades available yet.</p>
-                            {% endif %}
+                    {% set a_grades = graded_lectures|selectattr('pass_grade', '>=', 90)|list|length %}
+                    {% set b_grades = graded_lectures|selectattr('pass_grade', '>=', 80)|selectattr('pass_grade', '<', 90)|list|length %}
+                    {% set c_grades = graded_lectures|selectattr('pass_grade', '>=', 70)|selectattr('pass_grade', '<', 80)|list|length %}
+                    {% set d_grades = graded_lectures|selectattr('pass_grade', '>=', 60)|selectattr('pass_grade', '<', 70)|list|length %}
+                    {% set f_grades = graded_lectures|selectattr('pass_grade', '<', 60)|list|length %}
+                    <p>A grades: <span class="badge bg-success">{{ a_grades }}</span></p>
+                    <p>B grades: <span class="badge bg-info">{{ b_grades }}</span></p>
+                    <p>C grades: <span class="badge bg-warning">{{ c_grades }}</span></p>
+                    <p>D grades: <span class="badge bg-secondary">{{ d_grades }}</span></p>
+                    <p>F grades: <span class="badge bg-danger">{{ f_grades }}</span></p>
+                {% else %}
+                    <p class="text-muted">No grades available yet.</p>
+                {% endif %}
             </div>
         </div>
     </div>

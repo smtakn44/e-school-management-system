@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Admin Dashboard - E-School{% endblock %}
+{% block title %}administrator Dashboard - E-School{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-12">
-        <h2><i class="fas fa-user-cog"></i> Admin Dashboard</h2>
+        <h2><i class="fas fa-user-cog"></i> administrator Dashboard</h2>
         <p class="text-muted">Welcome back, {{ user.username }}!</p>
         <hr>
     </div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="/admin/students" class="text-white">
+                <a href="/administrator/students" class="text-white">
                     <small>View Details <i class="fas fa-arrow-right"></i></small>
                 </a>
             </div>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="/admin/teachers" class="text-white">
+                <a href="/administrator/teachers" class="text-white">
                     <small>View Details <i class="fas fa-arrow-right"></i></small>
                 </a>
             </div>
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <a href="/admin/departments" class="text-white">
+                <a href="/administrator/departments" class="text-white">
                     <small>View Details <i class="fas fa-arrow-right"></i></small>
                 </a>
             </div>
@@ -107,21 +107,21 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <div class="d-grid">
-                            <a href="/admin/students" class="btn btn-outline-primary">
+                            <a href="/administrator/students" class="btn btn-outline-primary">
                                 <i class="fas fa-user-graduate"></i> Manage Students
                             </a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="d-grid">
-                            <a href="/admin/teachers" class="btn btn-outline-success">
+                            <a href="/administrator/teachers" class="btn btn-outline-success">
                                 <i class="fas fa-chalkboard-teacher"></i> Manage Teachers
                             </a>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="d-grid">
-                            <a href="/admin/departments" class="btn btn-outline-info">
+                            <a href="/administrator/departments" class="btn btn-outline-info">
                                 <i class="fas fa-building"></i> Manage Departments
                             </a>
                         </div>
@@ -136,10 +136,10 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h6><i class="fas fa-user"></i> Admin Profile</h6>
+                <h6><i class="fas fa-user"></i> administrator Profile</h6>
             </div>
             <div class="card-body">
-                <p><strong>Admin ID:</strong> {{ user.administrator_id }}</p>
+                <p><strong>administrator ID:</strong> {{ user.administrator_id }}</p>
                 <p><strong>Username:</strong> {{ user.username }}</p>
                 <p><strong>Role:</strong> System Administrator</p>
             </div>

@@ -1,40 +1,44 @@
+import httpx
 from fastapi import APIRouter, Request, Depends
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from ..database import get_student_lectures, get_student_info
-from .auth import require_auth
+from .auth import get_current_user
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 
 @router.get("/dashboard", response_class=HTMLResponse)
-async def student_dashboard(request: Request):
-    """Student dashboard"""
-    user = require_auth(request, 'student')
+async def student_dashboard(request: Request, user=Depends(get_current_user)):
+    token = request.session.get("token")
+    headers = {"Authorization": f"Bearer {token}"} if token else {}
+    lectures = []
+    student_info = request.session.get("account", {})
     
-    student_info = get_student_info(user['user_id'])
-    lectures = get_student_lectures(user['user_id'])
-    
+    async with httpx.AsyncClient() as client:
+        resp_lectures = await client.get(f"http://localhost:8000/api/student/{student_info["account_id"]}/lectures", headers=headers)
+        if resp_lectures.status_code == 200:
+            lectures = resp_lectures.json().get("model", [])
+            
     return templates.TemplateResponse(
         "student/dashboard.html",
-        {
-            "request": request,
-            "user": user,
-            "student_info": student_info,
-            "lectures": lectures
-        }
+        {"request": request, "user": user, "lectures": lectures, "student_info": student_info}
     )
 
 @router.get("/lectures", response_class=HTMLResponse)
-async def student_lectures(request: Request):
-    """Student lectures page"""
-    user = require_auth(request, 'student')
-    lectures = get_student_lectures(user['user_id'])
+async def student_lectures(request: Request, user=Depends(get_current_user)):
+    token = request.session.get("token")
+    headers = {"Authorization": f"Bearer {token}"} if token else {}
+    lectures = []
+    student_info = request.session.get("account", {})
+    
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(f"http://localhost:8000/api/student/{student_info["account_id"]}/lectures", headers=headers)
+        if resp.status_code == 200:
+            lectures = resp.json().get("model", [])
+            
+    print(lectures)
+            
     return templates.TemplateResponse(
         "student/lectures.html",
-        {
-            "request": request,
-            "user": user,
-            "lectures": lectures
-        }
+        {"request": request, "user": user, "lectures": lectures}
     )
