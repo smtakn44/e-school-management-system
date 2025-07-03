@@ -81,7 +81,7 @@ Update the database configuration in `app/database.py`:
 ```python
 self.config = {
     'user': 'root',
-    'password': '1354SAMETakın',
+    'password': '#your_password_here',
     'host': 'localhost',
     'port': '3306',
     'database': 'E-School',
