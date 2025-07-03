@@ -187,7 +187,3 @@ System overview with management options for students, teachers, and departments.
 ## Contributing
 
 This is a demo project for learning purposes. Feel free to fork and modify as needed.
-
-## License
-
-This project is open source and available under the MIT License.
