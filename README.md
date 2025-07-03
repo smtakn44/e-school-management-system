@@ -170,20 +170,6 @@ E-School/
 - Bootstrap for responsive design
 - jQuery for client-side interactions
 
-## Screenshots
-
-### Login Page
-Simple login interface with user type selection.
-
-### Student Dashboard
-View enrolled lectures, grades, and academic progress.
-
-### Teacher Dashboard
-Manage assigned lectures and grade students.
-
-### Admin Dashboard
-System overview with management options for students, teachers, and departments.
-
 ## Contributing
 
 This is a demo project for learning purposes. Feel free to fork and modify as needed.
